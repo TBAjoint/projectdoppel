@@ -113,7 +113,10 @@
 					console.log('# of answers: ' + question.answerOptions.length);
 
 					for (var i = 0; i < question.answerOptions.length; i++) {
-						$(('#answer' + (i+1)).toString()).html(question.answerOptions[i]).addClass('result');
+						var element = '#answer' + (i+1).toString();
+						$(element).text(question.answerOptions[i]);
+						$(element).addClass('result');
+						$(element).attr('data-question-id', question.id);
 					};				
 
 				});
@@ -130,20 +133,30 @@
 				socket.emit('getQuestion');
 			}
 
+			function answerQuestion (elementId) {
+				var sender = document.getElementById(elementId);
+				var questionId = sender.getAttribute('data-question-id');
+				var answerValue = sender.getAttribute('data-question-value');
+				console.log('questionId: ' + questionId);
+				console.log('answerValue: ' + answerValue);
+
+				var socket = io.connect('http://localhost');
+				socket.emit('answerQuestion', { id: questionId, answer: answerValue });
+			}
+
 		</script>
 
 		<section class="container">
 			<div class="row">
 				<div id="leftcolumn" class="column full">Question div</div>
-				<!--<div id="rightcolumn" class="column half">right</div>-->
 			</div>
 
 
 			<div class="row">
-				<div class="column one-fourth" id="answer1">Answer div 1</div>
-				<div class="column one-fourth" id="answer2">Answer div 2</div>
-				<div class="column one-fourth" id="answer3">Answer div 3</div>
-				<div class="column one-fourth" id="answer4">Answer div 4</div>
+				<div class="column one-fourth" id="answer1" data-question-id="" data-question-value="1" onclick="answerQuestion('answer1');">Answer div 1</div>
+				<div class="column one-fourth" id="answer2" data-question-id="" data-question-value="2" onclick="answerQuestion('answer2');">Answer div 2</div>
+				<div class="column one-fourth" id="answer3" data-question-id="" data-question-value="3" onclick="answerQuestion('answer3');">Answer div 3</div>
+				<div class="column one-fourth" id="answer4" data-question-id="" data-question-value="4	" onclick="answerQuestion('answer4');">Answer div 4</div>
 			</div>
 
 			<div class="row">

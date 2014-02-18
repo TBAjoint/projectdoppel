@@ -32,6 +32,10 @@ io.sockets.on('connection', function (socket) {
     socket.emit('questionReply', { question: questions[rnd] });
   });
 
+  socket.on('answerQuestion', function(data) {
+    console.log('client answered question id: ' + data.id + '; answer: ' + data.answer);
+  });
+
   //listener
   socket.on('message', function (data) {
     console.log(data);

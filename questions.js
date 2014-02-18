@@ -12,8 +12,13 @@ var questions = [
     { 
       id: 3, 
       questionText: 'Who is the CEO of Yahoo!?', 
-      answerOptions: ['Mike Myers', 'Jack Bauer', 'Melinda Melin', 'Marissa Mayer'] }
-
+      answerOptions: ['Mike Myers', 'Jack Bauer', 'Melinda Melin', 'Marissa Mayer'] 
+    },
+    { 
+      id: 4, 
+      questionText: 'Uusi kysymys', 
+      answerOptions: ['vast 1', 'vast 2', 'vast 3', 'vast 5'] 
+    }
 ];
 
 exports.name = questions;

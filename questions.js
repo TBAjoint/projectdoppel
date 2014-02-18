@@ -16,8 +16,8 @@ var questions = [
     },
     { 
       id: 4, 
-      questionText: 'Uusi kysymys', 
-      answerOptions: ['vast 1', 'vast 2', 'vast 3', 'vast 5'] 
+      questionText: 'What is the best ranked movie in Rotten Tomatoes?', 
+      answerOptions: ['The Wizard of Oz', 'Citizen Kane', 'The Third Man', 'The Godfather'] 
     }
 ];
 

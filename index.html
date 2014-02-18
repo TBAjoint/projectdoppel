@@ -1,0 +1,118 @@
+<html>
+<head>
+	<style type="text/css">
+		body {
+			font-family: 'Source Sans Pro', sans-serif;
+		}
+		.container {
+			float: left;
+			margin: 0 auto;
+			padding: 50px;
+			max-width: 960px;
+			width: 100%;
+			border: 2px dashed gray;
+			background-color: #50d6ff
+		}
+
+		.column {
+			margin: 5px;
+			padding: 5px;
+			float: left;
+			border: 1px solid black;
+		}
+
+		.column.full {
+			width: 90%;
+		}
+
+		.column.two-thirds {
+			width: 65%;
+		}
+
+		.column.half {
+			width: 45%;
+		}
+
+		.column.one-third {
+			width: 30%;
+		}
+
+		.column.one-fourth {
+			width: 21.25%;
+		}
+
+		.row {
+			overflow: hidden;
+		}
+
+		.result {
+			background-color: #ffffff;
+		}
+
+		@media screen and (max-width: 640px) {
+			.column.full,
+			.column.two-thirds,
+			.column.half,
+			.column.one-third,
+			.column.one-fourth {
+				margin: 10px;
+				width: 95%;
+			}
+		}
+	</style>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<script>
+		$(document).ready(function(){
+			var socket = io.connect('http://localhost');
+
+			socket.on('connect', function(data) {
+				socket.emit('getQuestion');
+			});
+
+			socket.on('questionReply', function (data) {
+
+				var question = data['question'];
+				console.log('question id: ' + question.id);
+
+				$('#leftcolumn').html(question.questionText).addClass('result');
+				// $('#rightcolumn').html('question: ' + data['question.id']).addClass('result');
+
+				console.log('# of answers: ' + question.answerOptions.length);
+
+				for (var i = 0; i < question.answerOptions.length; i++) {
+					$(('#answer' + (i+1)).toString()).html(question.answerOptions[i]).addClass('result');
+				};				
+
+			});
+
+			socket.on('helloworld', function (data) {
+				console.log(data);
+
+				$('#rightcolumn').html('hello: ' + data['hello']).addClass('result');
+			});
+
+		});
+
+	</script>
+	
+	<section class="container">
+		<div class="row">
+			<div id="leftcolumn" class="column full">left</div>
+			<!--<div id="rightcolumn" class="column half">right</div>-->
+		</div>
+
+
+		<div class="row">
+			<div class="column one-fourth" id="answer1">1</div>
+			<div class="column one-fourth" id="answer2">2</div>
+			<div class="column one-fourth" id="answer3">3</div>
+			<div class="column one-fourth" id="answer4">4</div>
+		</div>
+
+	</section>
+
+</body>

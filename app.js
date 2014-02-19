@@ -1,8 +1,10 @@
 var app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app)
+  , Primus = require('primus.io')
   , fs = require('fs');
 
-app.listen(80);
+var primus = new Primus(app, { transformer: 'sockjs', parser: 'JSON' });
+
+app.listen(8000);
 
 //questions included in an external file for readability
 var storage = require('./questions.js');
@@ -21,7 +23,7 @@ function handler (req, res) {
   });
 }
 
-io.sockets.on('connection', function (socket) {
+primus.on('connection', function (socket) {
   //sender
   // socket.emit('connection', { message: 'ok' });
 
@@ -29,7 +31,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('getQuestion', function (data) {
     console.log('client asked for a question');
     var rnd = randomIntFromInterval(0, questions.length-1);
-    socket.emit('questionReply', { question: questions[rnd] });
+    socket.send('questionReply', { question: questions[rnd] });
   });
 
   socket.on('answerQuestion', function(data) {

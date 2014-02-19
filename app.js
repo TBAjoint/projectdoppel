@@ -2,8 +2,8 @@ var app = require('http').createServer(handler)
   , Primus = require('primus.io')
   , fs = require('fs');
 
-var primus = new Primus(app, { transformer: 'sockjs', parser: 'JSON' });
-
+var primus = new Primus(app, { transformer: 'socket.io', parser: 'JSON' });
+  
 app.listen(8000);
 
 //questions included in an external file for readability

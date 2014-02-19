@@ -98,12 +98,7 @@
 	</head>
 	<body>
 		<script>
-			//$(document).ready(function(){
 				var socket = Primus.connect('ws://localhost:8000');
-
-				// socket.on('connect', function(data) {
-				// 	socket.emit('getQuestion');
-				// });
 
 				socket.on('questionReply', function (data) {
 					var question = data['question'];
@@ -126,10 +121,7 @@
 					$('#rightcolumn').html('hello: ' + data['hello']).addClass('result');
 				});
 
-		//	});
-
 			function askForQuestion() {
-				//var socket = Primus.connect('ws://localhost:8000');
 				socket.send('getQuestion');
 			}
 
@@ -139,8 +131,6 @@
 				var answerValue = sender.getAttribute('data-question-value');
 				console.log('questionId: ' + questionId);
 				console.log('answerValue: ' + answerValue);
-
-				//var socket = Primus.connect('ws://localhost:8000');
 				socket.send('answerQuestion', { id: questionId, answer: answerValue });
 			}
 

@@ -24,23 +24,27 @@ function handler (req, res) {
 }
 
 primus.on('connection', function (socket) {
-  //sender
-  // socket.emit('connection', { message: 'ok' });
 
-  //listener
   socket.on('getQuestion', function (data) {
     console.log('client asked for a question');
     var rnd = randomIntFromInterval(0, questions.length-1);
     socket.send('questionReply', { question: questions[rnd] });
   });
 
-  socket.on('answerQuestion', function(data) {
+  socket.on('answerQuestion', function (data) {
     console.log('client answered question id: ' + data.id + '; answer: ' + data.answer);
   });
 
-  //listener
   socket.on('message', function (data) {
     console.log(data);
+  });
+
+  socket.on('join', function (game) {
+    join(socket, game)
+  });
+
+  socket.on('leave', function (game) {
+    leave(socket, game)
   });
 
 });
@@ -48,4 +52,38 @@ primus.on('connection', function (socket) {
 function randomIntFromInterval(min, max)
 {
     return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+// join room
+function join(socket, game) {
+  socket.join(game, function () {
+
+    // send message to this client
+    socket.write('you joined game ' + game);
+
+    // send message to all clients except this one
+    socket.room(game).write(socket.id + ' joined game ' + game);
+  });
+}
+
+// send to all clients in the room
+function send(socket, game, message) {
+  socket.room(game).write(message);
+}
+
+// leave room
+function leave(socket, game) {
+  socket.leave(game, function () {
+
+    // send message to this client
+    socket.write('you left game ' + game);
+
+    // send message to all clients except this one
+    socket.room(game).write(socket.id + ' left game ' + game);        
+  });
+}
+
+// send to all clients in the room
+function send(socket, game, message) {
+  socket.room(game).write(message);
 }

@@ -11,17 +11,16 @@ var storage = require('./questions.js');
 var questions = storage.name;
 
 function handler (req, res) {
-  fs.readFile(__dirname + '/index.html',
-  function (err, data) {
-    if (err) {
+  var stream = fs.createReadStream(__dirname + '/index.html');
+
+  stream.on('error', function() {
       res.writeHead(500);
-      return res.end('Error loading index.html');
-    }
+      res.end('Error loading index.html');
+    });
 
     res.writeHead(200);
-    res.end(data);
-  });
-}
+    stream.pipe(res);
+};
 
 primus.on('connection', function (socket) {
 

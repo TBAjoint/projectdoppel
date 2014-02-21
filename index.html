@@ -1,35 +1,62 @@
-<html>
+<!DOCTYPE html>
+<html lang="fi">
 <head>
-
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="/primus/primus.io.js"></script>
-	<link href="css/main.css" rel="stylesheet" type="text/css" media="all">
-	<script src="/js/main.js"></script>
+	<link href="/css/main.css" rel="stylesheet" type="text/css" media="all">
+	<script src="js/main.js"></script>
 </head>
 <body>
 	<div id="yberWrapper">
-	<header>
-		<h1>Project-muthaphucking-doppel-far-from-da-beta-bitches</h1>
-		<p>v.0.01</p>
-	</header>
-	<article class="container">
-		<div class="row">
-			<div id="leftcolumn" class="column full">Question div</div>
-		</div>
-
-		<div class="row">
-			<div class="column one-fourth" id="answer1" data-question-id="" data-question-value="1" onclick="answerQuestion('answer1');">Answer div 1</div>
-			<div class="column one-fourth" id="answer2" data-question-id="" data-question-value="2" onclick="answerQuestion('answer2');">Answer div 2</div>
-			<div class="column one-fourth" id="answer3" data-question-id="" data-question-value="3" onclick="answerQuestion('answer3');">Answer div 3</div>
-			<div class="column one-fourth" id="answer4" data-question-id="" data-question-value="4" onclick="answerQuestion('answer4');">Answer div 4</div>
-		</div>
-
-		<div class="row">
-			<input type="button" class="btn column full" value="Give me a question" onclick="askForQuestion();" />
-		</div>
-
-	</article>
+		<header class="container">
+			<h1>Project-muthaphucking-doppel-far-from-da-beta-bitches</h1>
+			<p>v.0.01</p>
+		</header>
+		<article class="container laQuestionnaire">
+			<div class="row">
+				<div id="leftcolumn" class="column full">Question div</div>
+			</div>
+			<div class="row">
+				<div class="column one-fourth" id="answer1" data-question-id="" data-question-value="1" onclick="answerQuestion('answer1');">Answer div 1</div>
+				<div class="column one-fourth" id="answer2" data-question-id="" data-question-value="2" onclick="answerQuestion('answer2');">Answer div 2</div>
+				<div class="column one-fourth" id="answer3" data-question-id="" data-question-value="3" onclick="answerQuestion('answer3');">Answer div 3</div>
+				<div class="column one-fourth" id="answer4" data-question-id="" data-question-value="4" onclick="answerQuestion('answer4');">Answer div 4</div>
+			</div>
+			<div class="row">
+				<input type="button" class="btn column full" value="Give me a question" onclick="askForQuestion();" />
+			</div>
+		</article>
+		<article class="container ownRoomStatus">
+			<div class="row">
+				<div class="column col6" id="roomName">
+					<h2>Room</h2>
+					<p>You are in Tomi's game..</p>
+				</div>
+				<div class="column col6">
+					<div id="disconnectFromRoom">Poistu</div>
+				</div>
+			</div>
+		</article>
+		<article class="container twinLists">
+			<div class="row">
+				<div class="column col6 playas">
+					<h3>Playas:</h3>
+					<ul>
+						<li>H&auml;ts&auml;</li>
+						<li>Magu</li>
+						<li>Speegu</li>
+					</ul>
+				</div>
+				<div class="column col6 openRooms">
+					<h3>Open games:</h3>
+					<ul>
+						<li>234789234789234</li>
+						<li>893293474378743</li>
+						<li>562367895478934</li>
+					</ul>
+				</div>
+			</div>
+		</article>
 	</div>
-
 </body>
 </html>

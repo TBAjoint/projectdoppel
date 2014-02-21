@@ -87,7 +87,7 @@ primus.on('disconnection', function (spark) {
   var index = clients.indexOf(spark.id);
   clients.splice(index, 1);
 
-  // this (will be) could be optimized that only disconnetdet client is send to client
+  // this (will be) could be optimized that only disconnetdet client is send to clients
   primus.send('clients', JSON.stringify(clients));
 });
 

@@ -1,5 +1,6 @@
 var app = require('http').createServer(handler)
   , Primus = require('primus.io')
+  , path = require('path')
   , fs = require('fs');
 
 var primus = new Primus(app, { transformer: 'socket.io', parser: 'JSON' });
@@ -10,16 +11,43 @@ app.listen(8000);
 var storage = require('./questions.js');
 var questions = storage.name;
 
-function handler (req, res) {
-  var stream = fs.createReadStream(__dirname + '/index.html');
-
-  stream.on('error', function() {
-      res.writeHead(500);
-      res.end('Error loading index.html');
-    });
-
-    res.writeHead(200);
-    stream.pipe(res);
+function handler (request, response) {
+    console.log('request starting...');
+  
+  var filePath = '.' + request.url;
+  if (filePath == './')
+    filePath = './index.html';
+    
+  var extname = path.extname(filePath);
+  var contentType = 'text/html';
+  switch (extname) {
+    case '.js':
+      contentType = 'text/javascript';
+      break;
+    case '.css':
+      contentType = 'text/css';
+      break;
+  }
+  
+  fs.exists(filePath, function(exists) {
+  
+    if (exists) {
+      fs.readFile(filePath, function(error, content) {
+        if (error) {
+          response.writeHead(500);
+          response.end();
+        }
+        else {
+          response.writeHead(200, { 'Content-Type': contentType });
+          response.end(content, 'utf-8');
+        }
+      });
+    }
+    else {
+      response.writeHead(404);
+      response.end();
+    }
+  });
 };
 
 primus.on('connection', function (socket) {

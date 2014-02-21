@@ -50,6 +50,8 @@ function handler (request, response) {
   });
 };
 
+var clients = [];
+
 primus.on('connection', function (socket) {
 
   socket.on('getQuestion', function (data) {
@@ -74,6 +76,19 @@ primus.on('connection', function (socket) {
     leave(socket, game)
   });
 
+  //add new client to connected clients array
+  clients.push(socket.id);
+  //send new client list to all clients (this could be optimizet that only new items are send)
+  primus.send('clients', JSON.stringify(clients));
+
+});
+
+primus.on('disconnection', function (spark) {
+  var index = clients.indexOf(spark.id);
+  clients.splice(index, 1);
+
+  // this (will be) could be optimized that only disconnetdet client is send to client
+  primus.send('clients', JSON.stringify(clients));
 });
 
 function randomIntFromInterval(min, max)

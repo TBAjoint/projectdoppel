@@ -21,6 +21,11 @@ socket.on('helloworld', function (data) {
 	$('#rightcolumn').html('hello: ' + data['hello']).addClass('result');
 });
 
+// this is called from server when ever someone connects or disconnect to the "doppel"
+socket.on('clients', function (data) {
+	console.log(data); //do the update of the DOM here
+});
+
 function askForQuestion() {
 	socket.send('getQuestion');
 }

@@ -1,163 +1,35 @@
 <html>
 <head>
-	<style type="text/css">
-		body {
-			font-family: 'Source Sans Pro', sans-serif;
-		}
-		.container {
-			float: left;
-			margin: 0 auto;
-			/*padding: 50px;*/
-			/*max-width: 960px;*/
-			width: 100%;
-			border: 2px dashed gray;
-			background-color: #50d6ff
-		}
 
-		.column {
-			padding: 10px;
-			margin: 5px;
-			/*padding: 5px;*/
-			float: left;
-			border: 1px solid black;
-		}
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="/primus/primus.io.js"></script>
+	<link href="css/main.css" rel="stylesheet" type="text/css" media="all">
+	<script src="/js/main.js"></script>
+</head>
+<body>
+	<div id="yberWrapper">
+	<header>
+		<h1>Project-muthaphucking-doppel-far-from-da-beta-bitches</h1>
+		<p>v.0.01</p>
+	</header>
+	<article class="container">
+		<div class="row">
+			<div id="leftcolumn" class="column full">Question div</div>
+		</div>
 
-		.column.full {
-			padding: 10px;
-			width: 90%;
-		}
+		<div class="row">
+			<div class="column one-fourth" id="answer1" data-question-id="" data-question-value="1" onclick="answerQuestion('answer1');">Answer div 1</div>
+			<div class="column one-fourth" id="answer2" data-question-id="" data-question-value="2" onclick="answerQuestion('answer2');">Answer div 2</div>
+			<div class="column one-fourth" id="answer3" data-question-id="" data-question-value="3" onclick="answerQuestion('answer3');">Answer div 3</div>
+			<div class="column one-fourth" id="answer4" data-question-id="" data-question-value="4" onclick="answerQuestion('answer4');">Answer div 4</div>
+		</div>
 
-		.column.two-thirds {
-			padding: 10px;
-			width: 65%;
-		}
+		<div class="row">
+			<input type="button" class="btn column full" value="Give me a question" onclick="askForQuestion();" />
+		</div>
 
-		.column.half {
-			padding: 10px;
-			width: 45%;
-		}
+	</article>
+	</div>
 
-		.column.one-third {
-			padding: 10px;
-			width: 30%;
-		}
-
-		.column.one-fourth {
-			padding: 10px;
-			width: 21.25%;
-		}
-
-		.row {
-			overflow: hidden;
-		}
-
-		.result {
-			background-color: #ffffff;
-		}
-		.result.one-fourth:hover, .result.one-fourth:active {
-			background-color: #578310;
-			color: #fff;
-			cursor: pointer;
-		}
-
-		.btn {
-			float: left;
-			border:1px solid #eeb44f;
-			color:#ffffff;
-			font-family:Helvetica;
-			font-size:15px;
-			font-weight:bold;
-			font-style:normal;
-			height:40px;
-			width:21.25%;
-			text-decoration:none;
-			text-align:center;
-			text-shadow:1px 1px 0px #cc9f52;
-			margin: 5px;
-			padding: 10px;
-			background: #ff990c;
-		}
-		.btn:hover {
-			background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477) );
-			background:-moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );
-			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
-			background-color:#fb9e25;
-		}.btn:active {
-			position:relative;
-			top:1px;
-
-			@media screen and (max-width: 640px) {
-				.column.full,
-				.column.two-thirds,
-				.column.half,
-				.column.one-third,
-				.column.one-fourth {
-					/*margin: 10px;*/
-					/*width: 95%;*/
-				}
-			}
-		</style>
-
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="/primus/primus.io.js"></script>
-	</head>
-	<body>
-		<script>
-				var socket = Primus.connect('ws://localhost:8000');
-
-				socket.on('questionReply', function (data) {
-					var question = data['question'];
-					console.log('question id: ' + question.id);
-
-					$('#leftcolumn').html(question.questionText).addClass('result');
-					console.log('# of answers: ' + question.answerOptions.length);
-
-					for (var i = 0; i < question.answerOptions.length; i++) {
-						var element = '#answer' + (i+1).toString();
-						$(element).text(question.answerOptions[i]);
-						$(element).addClass('result');
-						$(element).attr('data-question-id', question.id);
-					};				
-
-				});
-
-				socket.on('helloworld', function (data) {
-					console.log(data);
-					$('#rightcolumn').html('hello: ' + data['hello']).addClass('result');
-				});
-
-			function askForQuestion() {
-				socket.send('getQuestion');
-			}
-
-			function answerQuestion (elementId) {
-				var sender = document.getElementById(elementId);
-				var questionId = sender.getAttribute('data-question-id');
-				var answerValue = sender.getAttribute('data-question-value');
-				console.log('questionId: ' + questionId);
-				console.log('answerValue: ' + answerValue);
-				socket.send('answerQuestion', { id: questionId, answer: answerValue });
-			}
-
-		</script>
-
-		<section class="container">
-			<div class="row">
-				<div id="leftcolumn" class="column full">Question div</div>
-			</div>
-
-
-			<div class="row">
-				<div class="column one-fourth" id="answer1" data-question-id="" data-question-value="1" onclick="answerQuestion('answer1');">Answer div 1</div>
-				<div class="column one-fourth" id="answer2" data-question-id="" data-question-value="2" onclick="answerQuestion('answer2');">Answer div 2</div>
-				<div class="column one-fourth" id="answer3" data-question-id="" data-question-value="3" onclick="answerQuestion('answer3');">Answer div 3</div>
-				<div class="column one-fourth" id="answer4" data-question-id="" data-question-value="4	" onclick="answerQuestion('answer4');">Answer div 4</div>
-			</div>
-
-			<div class="row">
-				<input type="button" class="btn column full" value="Give me a question" onclick="askForQuestion();" />
-			</div>
-
-		</section>
-
-	</body>
+</body>
+</html>

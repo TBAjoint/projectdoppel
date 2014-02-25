@@ -7,13 +7,20 @@ socket.on('questionReply', function (data) {
 	$('#leftcolumn').html(question.questionText).addClass('result');
 	console.log('# of answers: ' + question.answerOptions.length);
 
-	for (var i = 0; i < question.answerOptions.length; i++) {
+	var i;
+	for (i = 0; i < question.answerOptions.length; i++) {
 		var element = '#answer' + (i+1).toString();
 		$(element).text(question.answerOptions[i]);
 		$(element).addClass('result');
 		$(element).attr('data-question-id', question.id);
-	};				
+		$(element).show();
+	};
 
+	//hide all the unused answer options
+	for(var i = i; i <= 4; i++) {
+		var element = '#answer' + (i+1).toString();
+		$(element).hide();
+	};
 });
 
 socket.on('helloworld', function (data) {

@@ -1,4 +1,14 @@
-var socket = Primus.connect('ws://localhost:8000');
+ var socket;
+
+ // fs.exists('./amazon.txt', function(exists) {
+ //    if (exists) {
+ //    	//this is Amazon EC2 deployment
+		socket = Primus.connect('ws://54.72.27.146/:8000');
+//     }
+//     else {
+//     	socket = Primus.connect('ws://localhost:8000');
+//     };
+// });
 
 socket.on('questionReply', function (data) {
 	var question = data['question'];

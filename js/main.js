@@ -5,31 +5,27 @@ jQuery(function ($) {
     init: function () {
 		this.socket = Primus.connect('ws://localhost:8000');
 
-     	//this is Amazon EC2 deployment
+		//this is Amazon EC2 deployment
 		// this.socket = Primus.connect('ws://54.72.27.146:8000');
 
 		this.socket.on('questionReply', function (data) {
 			App.renderQuestion(data);
 		});
 
-		this.socket.on('helloworld', function (data) {
-			console.log(data);
-			$('#rightcolumn').html('hello: ' + data['hello']).addClass('result');
-		});
-
 		this.socket.on('clients', function (data) {
 			console.log(data);
 		});
 
+		// bind onclick event for getquestion button
 		this.$btnGetQuestion = $('#getquestion');
 		this.$btnGetQuestion.on('click', this.askForQuestion.bind(this));
 
-
+		// bind onclick event for answer buttons
 		this.$question = $('#question');
+		this.$question.on('click', '.column', this.answerQuestion.bind(this));
+		
+		// precompile question template
 		this.$questionTemplate = Handlebars.compile($('#question-template').html());
-
-		this.$question.on('click', '.column', this.answerQuestion.bind(this));		
-
     },
     renderQuestion: function (data) {
 		$('#leftcolumn').html(data.question.questionText).addClass('result');

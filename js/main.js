@@ -1,40 +1,49 @@
-var socket = Primus.connect('ws://localhost:8000');
+jQuery(function ($) {
+  'use strict';
 
-socket.on('questionReply', function (data) {
-	var question = data['question'];
-	console.log('question id: ' + question.id);
+  var App = {
+    init: function () {
+		this.socket = Primus.connect('ws://localhost:8000');
 
-	$('#leftcolumn').html(question.questionText).addClass('result');
-	console.log('# of answers: ' + question.answerOptions.length);
+		this.socket.on('questionReply', function (data) {
+			App.renderQuestion(data);
+		});
 
-	for (var i = 0; i < question.answerOptions.length; i++) {
-		var element = '#answer' + (i+1).toString();
-		$(element).text(question.answerOptions[i]);
-		$(element).addClass('result');
-		$(element).attr('data-question-id', question.id);
-	};				
+		this.socket.on('helloworld', function (data) {
+			console.log(data);
+			$('#rightcolumn').html('hello: ' + data['hello']).addClass('result');
+		});
 
+		this.socket.on('clients', function (data) {
+			console.log(data);
+		});
+
+		this.$btnGetQuestion = $('#getquestion');
+		this.$btnGetQuestion.on('click', this.askForQuestion.bind(this));
+
+
+		this.$question = $('#question');
+		this.$questionTemplate = Handlebars.compile($('#question-template').html());
+
+		this.$question.on('click', '.column', this.answerQuestion.bind(this));		
+
+    },
+    renderQuestion: function (data) {
+		$('#leftcolumn').html(data.question.questionText).addClass('result');
+		this.$question.html(this.$questionTemplate(data.question));
+    },
+    askForQuestion: function () {
+		this.socket.send('getQuestion');
+    },
+    answerQuestion: function (elementId) { 
+		var sender = elementId.target;
+		var questionId = sender.getAttribute('data-question-id');
+		var answerValue = sender.getAttribute('data-question-value');
+		console.log('questionId: ' + questionId);
+		console.log('answerValue: ' + answerValue);
+		this.socket.send('answerQuestion', { id: questionId, answer: answerValue });
+    }
+  };
+
+  App.init();
 });
-
-socket.on('helloworld', function (data) {
-	console.log(data);
-	$('#rightcolumn').html('hello: ' + data['hello']).addClass('result');
-});
-
-// this is called from server when ever someone connects or disconnect to the "doppel"
-socket.on('clients', function (data) {
-	console.log(data); //do the update of the DOM here
-});
-
-function askForQuestion() {
-	socket.send('getQuestion');
-}
-
-function answerQuestion (elementId) {
-	var sender = document.getElementById(elementId);
-	var questionId = sender.getAttribute('data-question-id');
-	var answerValue = sender.getAttribute('data-question-value');
-	console.log('questionId: ' + questionId);
-	console.log('answerValue: ' + answerValue);
-	socket.send('answerQuestion', { id: questionId, answer: answerValue });
-}

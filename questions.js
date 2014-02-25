@@ -7,7 +7,7 @@ var questions = [
     { 
       id: 2, 
       questionText: 'Who won the NBA year 2000 dunk contest?',
-      answerOptions: ['Tracy McGrady', 'Vince Carter', 'Steve Francis'] 
+      answerOptions: ['Tracy McGrady', 'Vince Carter', 'Steve Francis', 'Kalle Päätalo'] 
     },
     { 
       id: 3, 

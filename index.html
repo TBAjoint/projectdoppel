@@ -2,6 +2,8 @@
 <html lang="fi">
 <head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+
 	<script src="/primus/primus.io.js"></script>
 	<link href="/css/main.css" rel="stylesheet" type="text/css" media="all">
 	<script src="js/main.js"></script>
@@ -16,14 +18,11 @@
 			<div class="row">
 				<div id="leftcolumn" class="column full">Question div</div>
 			</div>
-			<div class="row">
-				<div class="column one-fourth" id="answer1" data-question-id="" data-question-value="1" onclick="answerQuestion('answer1');">Answer div 1</div>
-				<div class="column one-fourth" id="answer2" data-question-id="" data-question-value="2" onclick="answerQuestion('answer2');">Answer div 2</div>
-				<div class="column one-fourth" id="answer3" data-question-id="" data-question-value="3" onclick="answerQuestion('answer3');">Answer div 3</div>
-				<div class="column one-fourth" id="answer4" data-question-id="" data-question-value="4" onclick="answerQuestion('answer4');">Answer div 4</div>
+			<div class="row" id="question">
+
 			</div>
 			<div class="row">
-				<input type="button" class="btn column full" value="Give me a question" onclick="askForQuestion();" />
+				<input type="button" id="getquestion" class="btn column full" value="Give me a question" />
 			</div>
 		</article>
 		<article class="container ownRoomStatus">
@@ -58,5 +57,12 @@
 			</div>
 		</article>
 	</div>
+		<script id="question-template" type="text/x-handlebars-template">
+		    {{#each answerOptions}}
+			<div class="column one-fourth" id="answer{{@index}}" 
+			data-question-id="{{../id}}" 
+			data-question-value="{{@index}}">{{this}}</div>
+			{{/each}}
+		</script>
 </body>
 </html>

@@ -3,19 +3,19 @@
  // fs.exists('./amazon.txt', function(exists) {
  //    if (exists) {
  //    	//this is Amazon EC2 deployment
-		socket = Primus.connect('ws://54.72.27.146/:8000');
+		// socket = Primus.connect('ws://54.72.27.146/:8000');
 //     }
 //     else {
-//     	socket = Primus.connect('ws://localhost:8000');
+    	socket = Primus.connect('ws://localhost:8000');
 //     };
 // });
 
 socket.on('questionReply', function (data) {
 	var question = data['question'];
-	console.log('question id: ' + question.id);
+	// console.log('question id: ' + question.id);
 
 	$('#leftcolumn').html(question.questionText).addClass('result');
-	console.log('# of answers: ' + question.answerOptions.length);
+	// console.log('# of answers: ' + question.answerOptions.length);
 
 	var i;
 	for (i = 0; i < question.answerOptions.length; i++) {

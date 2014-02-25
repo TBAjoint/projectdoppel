@@ -21,8 +21,13 @@ var questions = [
     },
     { 
       id: 5, 
-      questionText: 'What is the name of Kevin Spacey\'s character in House of Cards?', 
-      answerOptions: ['Francis Underwood', 'Francis Homewood'] 
+      questionText: 'What is the name of the character Kevin Spacey plays in House of Cards?', 
+      answerOptions: ['Francis Underwood', 'Francis Homewood']
+    },
+    { 
+      id: 6, 
+      questionText: '?', 
+      answerOptions: ['true', 'false']
     }
 ];
 

@@ -18,6 +18,16 @@ var questions = [
       id: 4, 
       questionText: 'What is the best ranked movie in Rotten Tomatoes?', 
       answerOptions: ['The Wizard of Oz', 'Citizen Kane', 'The Third Man', 'The Godfather'] 
+    },
+    { 
+      id: 5, 
+      questionText: 'What is the name of the character Kevin Spacey plays in House of Cards?', 
+      answerOptions: ['Francis Underwood', 'Francis Homewood']
+    },
+    { 
+      id: 6, 
+      questionText: '?', 
+      answerOptions: ['true', 'false']
     }
 ];
 

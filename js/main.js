@@ -13,7 +13,7 @@ jQuery(function ($) {
 		});
 
 		this.socket.on('clients', function (data) {
-			console.log(data);
+			App.renderPlayas(data);
 		});
 
 		// bind onclick event for getquestion button
@@ -26,10 +26,17 @@ jQuery(function ($) {
 		
 		// precompile question template
 		this.$questionTemplate = Handlebars.compile($('#question-template').html());
+
+		// precompile playas template
+		this.$playas = $('#playas');
+		this.$playasTemplate = Handlebars.compile($('#playas-template').html());
     },
     renderQuestion: function (data) {
 		$('#leftcolumn').html(data.question.questionText).addClass('result');
 		this.$question.html(this.$questionTemplate(data.question));
+    },
+    renderPlayas: function (data) {
+		this.$playas.html(this.$playasTemplate(data));
     },
     askForQuestion: function () {
 		this.socket.send('getQuestion');

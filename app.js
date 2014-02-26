@@ -80,7 +80,7 @@ primus.on('connection', function (socket) {
   //add new client to connected clients array
   clients.push(socket.id);
   //send new client list to all clients (this could be optimizet that only new items are send)
-  primus.send('clients', JSON.stringify(clients));
+  primus.send('clients', clients);
 
 });
 
@@ -89,7 +89,7 @@ primus.on('disconnection', function (spark) {
   clients.splice(index, 1);
 
   // this (will be) could be optimized that only disconnetdet client is send to clients
-  primus.send('clients', JSON.stringify(clients));
+  primus.send('clients', clients);
 });
 
 function randomIntFromInterval(min, max)

@@ -38,13 +38,8 @@
 		</article>
 		<article class="container twinLists">
 			<div class="row">
-				<div class="column col6 playas">
-					<h3>Playas:</h3>
-					<ul>
-						<li>H&auml;ts&auml;</li>
-						<li>Magu</li>
-						<li>Speegu</li>
-					</ul>
+				<div class="column col6 playas" id="playas">
+
 				</div>
 				<div class="column col6 openRooms">
 					<h3>Open games:</h3>
@@ -57,12 +52,20 @@
 			</div>
 		</article>
 	</div>
-		<script id="question-template" type="text/x-handlebars-template">
-		    {{#each answerOptions}}
-			<div class="column one-fourth result" id="answer{{@index}}" 
-			data-question-id="{{../id}}" 
-			data-question-value="{{@index}}">{{this}}</div>
-			{{/each}}
-		</script>
+	<script id="question-template" type="text/x-handlebars-template">
+	    {{#each answerOptions}}
+		<div class="column one-fourth result" id="answer{{@index}}" 
+		data-question-id="{{../id}}" 
+		data-question-value="{{@index}}">{{this}}</div>
+		{{/each}}
+	</script>
+	<script id="playas-template" type="text/x-handlebars-template">
+		<h3>Playas:</h3>
+		<ul>
+		{{#each this}}
+			<li>{{this}}</li>
+		{{/each}}
+		</ul>	   
+	</script>
 </body>
 </html>

@@ -3,10 +3,10 @@ jQuery(function ($) {
 
   var App = {
     init: function () {
-		this.socket = Primus.connect('ws://www.fireitapp.fi:8080');
+		this.socket = Primus.connect('ws://localhost:8080');
 
 		//this is Amazon EC2 deployment
-		// this.socket = Primus.connect('ws://54.72.27.146:8000');
+		// this.socket = Primus.connect('ws://54.72.27.146:8080');
 
 		this.socket.on('questionReply', function (data) {
 			App.renderQuestion(data);

@@ -1,3 +1,6 @@
 [submodule "socket.io"]
 	path = socket.io
 	url = https://github.com/LearnBoost/socket.io.git
+[submodule "gith"]
+	path = gith
+	url = https://github.com/danheberden/gith.git

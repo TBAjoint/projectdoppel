@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "socket.io": "",
-    "primus.io": ""
+    "primus.io": "",
+    "gith": ""
   }
 }

@@ -5,7 +5,21 @@ var app = require('http').createServer(handler)
 
 var primus = new Primus(app, { transformer: 'socket.io', parser: 'JSON' });
   
-app.listen(8000);
+app.listen(8080);
+
+var gith = require('gith').create(9111);
+
+gith({
+  repo: 'TBAjoint/projectdoppel'
+}).on('all', function(payload) {
+  console.log('Post-receive happened!');
+  var sys = require('sys')
+  var exec = require('child_process').exec;
+  function puts(error, stdout, stderr) { 
+    sys.puts(stdout)
+  };
+    exec(". ~/www/deploy.sh", puts); // command to be executed
+});
 
 //questions included in an external file for readability
 var storage = require('./questions.js');

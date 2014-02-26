@@ -37,8 +37,8 @@ jQuery(function ($) {
 		var sender = elementId.target;
 		var questionId = sender.getAttribute('data-question-id');
 		var answerValue = sender.getAttribute('data-question-value');
-		console.log('questionId: ' + questionId);
-		console.log('answerValue: ' + answerValue);
+		// console.log('questionId: ' + questionId);
+		// console.log('answerValue: ' + answerValue);
 		this.socket.send('answerQuestion', { id: questionId, answer: answerValue });
     }
   };

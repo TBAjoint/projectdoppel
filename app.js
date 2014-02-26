@@ -69,9 +69,9 @@ var clients = [];
 primus.on('connection', function (socket) {
 
   socket.on('getQuestion', function (data) {
-    console.log('client asked for a question');
+    // console.log('client asked for a question');
     var rnd = randomIntFromInterval(0, questions.length-1);
-    console.log('randomized question number ' + rnd);
+    // console.log('randomized question number ' + rnd);
     socket.send('questionReply', { question: questions[rnd] });
   });
 

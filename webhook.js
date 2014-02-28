@@ -4,7 +4,8 @@ var express = require('express'),
     spawn = cp.spawn,
     exec = cp.exec,
     app = express();
-var child, 2095;
+var child, 
+    port = 2095;
 
 function restartApp(req, res)
 {

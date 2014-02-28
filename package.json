@@ -7,6 +7,7 @@
   "dependencies": {
     "socket.io": "",
     "primus.io": "",
-    "gith": ""
+    "gith": "",
+    "express": ""
   }
 }
